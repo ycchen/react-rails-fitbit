@@ -22,3 +22,22 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+rails new reactfit --webpack=react
+./bin/webpacker-dev-server
+
+app/javascript/packs/hello_react.jsx
+
+app/views/home/home.html.erb
+<%= javascript_pack_tag 'hello_react' %>
+
+app/javascript/packs/dashboard.jsx
+
+app/views/root/index.html.erb
+<%= javascript_pack_tag 'dashboard' %>
+
+* Add bootstrap and axios using yarn
+```ruby
+yarn add bootstrap
+yarn add axios
+```
