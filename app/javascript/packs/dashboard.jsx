@@ -3,45 +3,39 @@ import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 import LifetimeStats from './LifetimeStats'
+import InitialStates from './InitialStates'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props),
-    this.state = {
-      user: {},
-      loggedIn: false,
-      lifetimeTracker: {},
-      lifetimeTotals: {}
-    }
+    this.state = InitialStates
+  }
+
+  fetchFitbitData(url, fitbitToken, stateKey, dataKey) {
+    axios({
+      method: 'get',
+      url: url,
+      headers: { 'Authorization': 'Bearer ' + fitbitToken },
+      mode: 'cors'
+    })
+    .then(response => {
+      console.log(response.data)
+      this.setState({[stateKey]: response.data})
+    })
+    .catch(error => console.log(error))
+
   }
   componentDidMount() {
     if(window.location.hash){
       let fitbitToken = window.location.hash.slice(1).split("&")[0].replace("access_token=","")
       console.log('fitbitToken=', fitbitToken )
+      this.setState({loggedIn: true})
 
-      axios({
-        method: 'get',
-        url: 'https://api.fitbit.com/1/user/-/profile.json',
-        headers: { 'Authorization': 'Bearer ' + fitbitToken },
-        mode: 'cors'
-      })
-      .then(response => {
-        console.log('user ',response.data)
-        this.setState({user: response.data.user, loggedIn: true})
-      })
-      .catch(error => console.log(error))
+      this.fetchFitbitData('https://api.fitbit.com/1/user/-/profile.json', fitbitToken, 'user')
 
-      axios({
-        method: 'get',
-        url: 'https://api.fitbit.com/1/user/-/activities.json',
-        headers: { 'Authorization': 'Bearer ' + fitbitToken },
-        mode: 'cors'
-      })
-      .then(response => {
-        console.log('lifetime ', response.data)
-        this.setState({lifetimeTracker: response.data.lifetime.tracker, lifetimeTotals: response.data.lifetime.total})
-      })
-      .catch(error => console.log(error))
+      this.fetchFitbitData('https://api.fitbit.com/1/user/-/activities.json', fitbitToken, 'lifetimeStats')
+
+      this.fetchFitbitData('https://api.fitbit.com/1/user/-/badges.json', fitbitToken, 'badges')
 
     }
   }
@@ -50,7 +44,7 @@ class Dashboard extends Component {
     return (
       <div className="container">
         <header className="text-center">
-          <span className="float-right">{this.state.user.displayName}</span>
+          <span className="float-right">{this.state.user.user.displayName}</span>
           <h1 className="page-header">React Fit</h1>        
           <p className="lead">Your personal fitness dashboardf</p>
         </header>
@@ -64,12 +58,22 @@ class Dashboard extends Component {
         }
         <div className="row">
           <div className="col-lg-3">
-            <LifetimeStats lifetimeTotals={this.state.lifetimeTotals} lifetimeTracker={this.state.lifetimeTracker} />
+            <LifetimeStats lifetimeStats={this.state.lifetimeStats} />
             
             <div className="card">
               <div className="card-heading"><h4>Badges</h4></div>
               <div className="card-body">
-                One of three columns
+                {this.state.badges.badges.map((badge, i) => {
+                  return (
+                    <div key={i}>
+                      <h5>{badge.shortName}</h5>
+                      <p><img src="{badge.image100px}" /></p>
+                      <p>{badge.description}</p>
+                      <p>Earned {badge.timeAchieved} times</p>
+                      <p>Last on {badge.dateTime}</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
 
