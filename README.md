@@ -53,5 +53,18 @@ yarn add axios
  # Make sure the OAuth 2.0 Application Type set to "Client"
  # Use OAuth 2.0 tutorial page to generate authorization URL for you
  -- Flow type: Implicit Grant Flow
- 
+
+ http://localhost:3000/#access_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2UFg1UkgiLCJhdWQiOiIyMkNaVEMiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTI5ODUyMDU0LCJpYXQiOjE1MjkyNDczNjl9.CILT1JLxRykRfn_rr10KHKBIkMUQFO1cRJD4JljSm6Q
+ &user_id=6PX5RH
+ &scope=location+heartrate+sleep+nutrition+social+weight+activity+settings+profile
+ &token_type=Bearer
+ &expires_in=604685
+
+# inside of browser console
+  window.location.hash.slice(1).split("&")[0]
+ =>
+ "access_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2UFg1UkgiLCJhdWQiOiIyMkNaVEMiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTI5ODUyMDU0LCJpYXQiOjE1MjkyNDczNjl9.CILT1JLxRykRfn_rr10KHKBIkMUQFO1cRJD4JljSm6Q"
+ window.location.hash.slice(1).split("&")[0].replace("access_token=","")
+ =>
+ "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2UFg1UkgiLCJhdWQiOiIyMkNaVEMiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTI5ODUyMDU0LCJpYXQiOjE1MjkyNDczNjl9.CILT1JLxRykRfn_rr10KHKBIkMUQFO1cRJD4JljSm6Q"
 ```
