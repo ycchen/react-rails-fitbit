@@ -6,6 +6,12 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount() {
+    if(window.location.hash){
+      let fitbitToken = window.location.hash.slice(1).split("&")[0].replace("access_token=","")
+      console.log('fitbitToken=', fitbitToken )
+    }
+  }
   
   render() {
     return (
