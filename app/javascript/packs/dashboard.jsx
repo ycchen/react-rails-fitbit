@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
+import axios from 'axios'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,7 +15,18 @@ class Dashboard extends Component {
     if(window.location.hash){
       let fitbitToken = window.location.hash.slice(1).split("&")[0].replace("access_token=","")
       console.log('fitbitToken=', fitbitToken )
-      this.setState({loggedIn: true})
+
+      axios({
+        method: 'get',
+        url: 'https://api.fitbit.com/1/user/-/profile.json',
+        headers: { 'Authorization': 'Bearer ' + fitbitToken },
+        mode: 'cors'
+      })
+      .then(response => {
+        console.log(response.data)
+        this.setState({user: response.data, loggedIn: true})
+      })
+      .catch(error => console.log(error))
     }
   }
   
