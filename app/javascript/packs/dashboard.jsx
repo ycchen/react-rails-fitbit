@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
+import LifetimeStats from './LifetimeStats'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props),
     this.state = {
       user: {},
-      loggedIn: false
+      loggedIn: false,
+      lifetimeTracker: {},
+      lifetimeTotals: {}
     }
   }
   componentDidMount() {
@@ -23,10 +26,23 @@ class Dashboard extends Component {
         mode: 'cors'
       })
       .then(response => {
-        console.log(response.data)
+        console.log('user ',response.data)
         this.setState({user: response.data.user, loggedIn: true})
       })
       .catch(error => console.log(error))
+
+      axios({
+        method: 'get',
+        url: 'https://api.fitbit.com/1/user/-/activities.json',
+        headers: { 'Authorization': 'Bearer ' + fitbitToken },
+        mode: 'cors'
+      })
+      .then(response => {
+        console.log('lifetime ', response.data)
+        this.setState({lifetimeTracker: response.data.lifetime.tracker, lifetimeTotals: response.data.lifetime.total})
+      })
+      .catch(error => console.log(error))
+
     }
   }
   
@@ -46,8 +62,39 @@ class Dashboard extends Component {
             </a>
           </div>
         }
+        <div className="row">
+          <div className="col-lg-3">
+            <LifetimeStats lifetimeTotals={this.state.lifetimeTotals} lifetimeTracker={this.state.lifetimeTracker} />
+            
+            <div className="card">
+              <div className="card-heading"><h4>Badges</h4></div>
+              <div className="card-body">
+                One of three columns
+              </div>
+            </div>
 
+          </div>
+          <div className="col-lg-6">
+            <div className="card">
+              <div className="card-heading"><h4>Steps</h4></div>
+              <div className="card-body">
+               
+              </div>
+               
+            </div>
+            
+            <div className="card">
+              <div className="card-heading"><h4>Distance (miles)</h4></div>
+            </div>
+
+          </div>
+          <div className="col-lg-2 col-lg-offset-1">
+            <div className="card">
+              <div className="card-heading"><h4>Your Friends</h4></div>
+            </div>
+          </div>
       </div>
+    </div>
     );
   }
 }
