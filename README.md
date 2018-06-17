@@ -40,4 +40,18 @@ app/views/root/index.html.erb
 ```ruby
 yarn add bootstrap
 yarn add axios
+
+# after import bootstrap.css, add stylesheet to root/index.html.erb
+# app/views/root/index.html.erb
+<%= javascript_pack_tag 'dashboard' %>
+<%= stylesheet_pack_tag 'dashboard' %>
+
+```
+
+* Add Fitbit auth by created an account with Fitbit.com and enable developer API
+```ruby
+ # Make sure the OAuth 2.0 Application Type set to "Client"
+ # Use OAuth 2.0 tutorial page to generate authorization URL for you
+ -- Flow type: Implicit Grant Flow
+ 
 ```
