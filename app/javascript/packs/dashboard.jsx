@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 import LifetimeStats from './LifetimeStats'
 import InitialStates from './InitialStates'
+import Badges from './Badges'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -59,24 +60,7 @@ class Dashboard extends Component {
         <div className="row">
           <div className="col-lg-3">
             <LifetimeStats lifetimeStats={this.state.lifetimeStats} />
-            
-            <div className="card">
-              <div className="card-heading"><h4>Badges</h4></div>
-              <div className="card-body">
-                {this.state.badges.badges.map((badge, i) => {
-                  return (
-                    <div key={i}>
-                      <h5>{badge.shortName}</h5>
-                      <p><img src="{badge.image100px}" /></p>
-                      <p>{badge.description}</p>
-                      <p>Earned {badge.timeAchieved} times</p>
-                      <p>Last on {badge.dateTime}</p>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
+            <Badges badges={this.state.badges.badges} />
           </div>
           <div className="col-lg-6">
             <div className="card">
