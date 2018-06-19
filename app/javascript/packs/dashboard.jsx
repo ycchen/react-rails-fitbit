@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import axios from 'axios'
-import LifetimeStats from './LifetimeStats'
-import InitialStates from './InitialStates'
-import Badges from './Badges'
+import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
+import LifetimeStats from './LifetimeStats';
+import InitialStates from './InitialStates';
+import Steps from './Steps';
+import Badges from './Badges';
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -38,6 +40,7 @@ class Dashboard extends Component {
 
       this.fetchFitbitData('https://api.fitbit.com/1/user/-/badges.json', fitbitToken, 'badges')
 
+      this.fetchFitbitData('https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json', fitbitToken, 'steps')
     }
   }
   
@@ -63,13 +66,7 @@ class Dashboard extends Component {
             <Badges badges={this.state.badges.badges} />
           </div>
           <div className="col-lg-6">
-            <div className="card">
-              <div className="card-heading"><h4>Steps</h4></div>
-              <div className="card-body">
-               
-              </div>
-               
-            </div>
+            <Steps steps={this.state.steps} />
             
             <div className="card">
               <div className="card-heading"><h4>Distance (miles)</h4></div>
