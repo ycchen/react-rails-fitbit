@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import LifetimeStats from './LifetimeStats';
 import InitialStates from './InitialStates';
-import Steps from './Steps';
+import TimeSeriesBarChart from './TimeSeriesBarChart';
 import Badges from './Badges';
-
+import Friends from './Friends';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -41,6 +41,8 @@ class Dashboard extends Component {
       this.fetchFitbitData('https://api.fitbit.com/1/user/-/badges.json', fitbitToken, 'badges')
 
       this.fetchFitbitData('https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json', fitbitToken, 'steps')
+
+      this.fetchFitbitData('https://api.fitbit.com/1/user/-/activities/distance/date/today/1m.json', fitbitToken, 'distance')
     }
   }
   
@@ -66,17 +68,15 @@ class Dashboard extends Component {
             <Badges badges={this.state.badges.badges} />
           </div>
           <div className="col-lg-6">
-            <Steps steps={this.state.steps} />
-            
+            <TimeSeriesBarChart data={this.state.steps["activities-steps"]} title="Steps" yMax={8000} />
+            <TimeSeriesBarChart data={this.state.distance["activities-distance"]} title="Distance (miles)" yMax={6} />
             <div className="card">
               <div className="card-heading"><h4>Distance (miles)</h4></div>
             </div>
 
           </div>
           <div className="col-lg-2 col-lg-offset-1">
-            <div className="card">
-              <div className="card-heading"><h4>Your Friends</h4></div>
-            </div>
+              <Friends friends={this.state.friends.friends} />
           </div>
       </div>
     </div>

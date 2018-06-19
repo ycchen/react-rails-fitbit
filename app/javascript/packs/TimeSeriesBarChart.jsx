@@ -1,19 +1,19 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
-const Steps = ({steps}) =>
+const TimeSeriesBarChart = ({data, title, yMax}) =>
   <div className="card">
-    <div className="card-heading"><h4>Steps</h4></div>
+    <div className="card-heading"><h4>{title}}</h4></div>
     <div className="card-body">
-      <BarChart width={500} height={300} data={steps["activities-steps"]} 
+      <BarChart width={500} height={300} data={data} 
         margin={{top: 5, right: 30, left: 20, bottom: 5}}>
       <CartesianGrid strokeDasharray="3 3"/>
       <XAxis dataKey="dateTime" />
-      <YAxis domain={[0, 8000]} />
+      <YAxis domain={[0, yMax]} />
       <Tooltip/>
       <Bar dataKey="value" fill="#8884d8" />
       </BarChart>
     </div>
   </div>
     
-export default Steps;
+export default TimeSeriesBarChart;
