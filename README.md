@@ -68,3 +68,9 @@ yarn add axios
  =>
  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2UFg1UkgiLCJhdWQiOiIyMkNaVEMiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTI5ODUyMDU0LCJpYXQiOjE1MjkyNDczNjl9.CILT1JLxRykRfn_rr10KHKBIkMUQFO1cRJD4JljSm6Q"
 ```
+
+* add recharts #http://recharts.org/#/en-US/examples/SimpleBarChart
+```ruby
+  yarn add recharts
+
+```
